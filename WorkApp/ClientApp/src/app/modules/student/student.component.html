@@ -1,0 +1,31 @@
+<h2 class="student-title">{{student.name}}</h2>
+
+<div class="student-info">
+  <p id="name">
+    {{student.name}}
+  </p>
+  <p id="age">
+    {{student.name}}
+  </p>
+  <p id="group">
+    {{student.name}}
+  </p>
+  <p id="course">
+    {{student.name}}
+  </p>
+</div>
+
+<div class="student-marks">
+  <mat-tab-group>
+    <mat-tab label="Math">Math marks</mat-tab>
+    <mat-tab label="English">English marks</mat-tab>
+    <mat-tab label="All marks">
+      <div id="mark" *ngFor="let mark of student.marks">{{mark}}</div>
+    </mat-tab>
+
+    <!--TODO: insert current after testing and replace smth-->
+    <!--<mat-label *ngFor="let subject of subjects$ | async" label="{{subject.name}}">
+      <div id="mark" *ngFor="let mark of marks">{{mark}}</div>
+    </mat-label>-->
+  </mat-tab-group>
+</div>

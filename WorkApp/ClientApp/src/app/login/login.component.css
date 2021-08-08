@@ -1,0 +1,9 @@
+.login-title {
+  height: 8vh;
+  width: 100%;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.72);
+  text-shadow: 3px 3px 3px #c0c0be;
+  margin-bottom: 30px;
+  background: rgba(191, 191, 191, 0.16);
+}
