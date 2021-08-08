@@ -7,30 +7,27 @@ using WorkApp.Database.Repositories;
 
 namespace WorkApp.Database.UnitOfWork
 {
-    public class UnitOfWork : IDisposable
+    public class UnitOfWork : IUnitOfWork
     {
-        private static UnitOfWork instance;
-        public static UnitOfWork Instance => instance ?? (instance = new UnitOfWork());
+        DatabaseContext ctx;
 
-        private DatabaseContext ctx;
+        SubjectsRepository _subjectsRepository;
+        MarksRepository _marksRepository;
+        UsersRepository _usersRepository;
 
-        private SubjectsRepository subjectsRepository;
-        private MarksRepository marksRepository;
-        private UsersRepository usersRepository;
+        public SubjectsRepository SubjectsRepository => _subjectsRepository
+            ?? (_subjectsRepository = new SubjectsRepository(ctx));
 
-        public SubjectsRepository SubjectsRepository => subjectsRepository
-            ?? (subjectsRepository = new SubjectsRepository(ctx));
+        public MarksRepository MarksRepository => _marksRepository
+            ?? (_marksRepository = new MarksRepository(ctx));
 
-        public MarksRepository MarksRepository => marksRepository
-            ?? (marksRepository = new MarksRepository(ctx));
-
-        public UsersRepository UsersRepository => usersRepository
-            ?? (usersRepository = new UsersRepository(ctx));
+        public UsersRepository UsersRepository => _usersRepository
+            ?? (_usersRepository = new UsersRepository(ctx));
 
 
-        private UnitOfWork()
+        public UnitOfWork(DatabaseContext ctx)
         {
-            ctx = new DatabaseContext();
+            this.ctx = ctx;
         }
 
         private bool disposed = false;

@@ -13,8 +13,6 @@ namespace WorkApp.Database.Common
         public DbSet<Mark> Marks { get; set; }
         public DbSet<User> Users { get; set; }
 
-        public DatabaseContext() { }
-
         public DatabaseContext(DbContextOptions<DatabaseContext> options): base(options)
         {
             Database.EnsureCreated();

@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WorkApp.Business.Services.Subjects;
 using WorkApp.Database.Common;
+using WorkApp.Database.UnitOfWork;
 
 namespace WorkApp
 {
@@ -21,12 +23,18 @@ namespace WorkApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connection = Configuration.GetConnectionString("DefaultConnection");
-
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connection));
-
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
+            services.AddDbContext<DatabaseContext>(options => { 
+                string connectionString = Configuration.GetConnectionString("DefaultConnection");
+                options.UseSqlServer(connectionString);
+            });
+
+            services.AddIdentity<IUnitOfWork, UnitOfWork>();
+            services.AddIdentity<ISubjectsService, SubjectsService>();
+            services.AddIdentity<ISubjectsService, SubjectsService>();
+            services.AddIdentity<ISubjectsService, SubjectsService>();
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";

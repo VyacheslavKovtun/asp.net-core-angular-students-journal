@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
   }
 
   onBtnLogInFormClick() {
-
+    
   }
 
   onBtnCheckInFormClick() {
