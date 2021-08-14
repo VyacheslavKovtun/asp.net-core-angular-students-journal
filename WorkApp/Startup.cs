@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -5,9 +6,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using WorkApp.Business.Services.Marks;
 using WorkApp.Business.Services.Subjects;
+using WorkApp.Business.Services.Users;
 using WorkApp.Database.Common;
 using WorkApp.Database.UnitOfWork;
+using WorkApp.Utils;
 
 namespace WorkApp
 {
@@ -32,13 +37,30 @@ namespace WorkApp
 
             services.AddIdentity<IUnitOfWork, UnitOfWork>();
             services.AddIdentity<ISubjectsService, SubjectsService>();
-            services.AddIdentity<ISubjectsService, SubjectsService>();
-            services.AddIdentity<ISubjectsService, SubjectsService>();
+            services.AddIdentity<IMarksService, MarksService>();
+            services.AddIdentity<IUsersService, UsersService>();
 
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = AuthOptions.ISSUER,
+                        ValidateAudience = true,
+                        ValidAudience = AuthOptions.AUDIENCE,
+                        ValidateLifetime = true,
+
+                        IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                        ValidateIssuerSigningKey = true,
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +82,9 @@ namespace WorkApp
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

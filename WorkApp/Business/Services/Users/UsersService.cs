@@ -29,6 +29,7 @@ namespace WorkApp.Business.Services.Users
             {
                 Login = user.Login,
                 Password = user.Password,
+                Role = user.Role,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Age = user.Age,
@@ -63,6 +64,7 @@ namespace WorkApp.Business.Services.Users
                     Id = user.Id,
                     Login = user.Login,
                     Password = user.Password,
+                    Role = user.Role,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     Age = user.Age,
@@ -91,6 +93,7 @@ namespace WorkApp.Business.Services.Users
                 Id = user.Id,
                 Login = user.Login,
                 Password = user.Password,
+                Role = user.Role,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Age = user.Age,
@@ -126,6 +129,7 @@ namespace WorkApp.Business.Services.Users
                 Id = user.Id,
                 Login = user.Login,
                 Password = user.Password,
+                Role = user.Role,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Age = user.Age,
@@ -135,6 +139,12 @@ namespace WorkApp.Business.Services.Users
             };
 
             await unitOfWork.UsersRepository.UpdateAsync(u);
+        }
+
+        public async Task<UserDTO> GetUserByLoginData(string login, string password)
+        {
+            var users = await GetAllUsers();
+            return users.FirstOrDefault(u => u.Login.Equals(login) && u.Password.Equals(password));
         }
     }
 }

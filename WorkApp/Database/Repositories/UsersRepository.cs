@@ -24,6 +24,7 @@ namespace WorkApp.Database.Repositories
 
             user.Login = value.Login;
             user.Password = value.Password;
+            user.Role = value.Role;
             user.FirstName = value.FirstName;
             user.LastName = value.LastName;
             user.Age = value.Age;

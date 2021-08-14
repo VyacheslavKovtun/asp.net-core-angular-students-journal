@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static WorkApp.Database.Entities.User;
 
 namespace WorkApp.Business.DTO
 {
@@ -9,6 +10,7 @@ namespace WorkApp.Business.DTO
     {
         public int Id { get; set; }
         public string Login { get; set; }
+        public AuthRole Role { get; set; }
         public string Password { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
