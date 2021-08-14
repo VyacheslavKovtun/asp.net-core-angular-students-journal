@@ -26,7 +26,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ['http://localhost:16368/']
+        allowedDomains: ['http://localhost:30699/']
       }
     }),
     MatTabsModule,

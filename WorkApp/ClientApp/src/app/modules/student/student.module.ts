@@ -107,7 +107,7 @@ import {AuthModule} from '../../shared/modules/auth.module';
     MatFormFieldModule,
     AuthModule,
     RouterModule.forRoot([
-      { path: 'student', component: StudentComponent/*, canActivate:[AuthGuard] */},
+      { path: 'student', component: StudentComponent, canActivate:[AuthGuard]},
     ]),
   ],
   providers: [

@@ -107,7 +107,7 @@ import {AuthInterceptor} from '../../shared/interceptors/auth.interceptor';
     MatFormFieldModule,
     AuthModule,
     RouterModule.forRoot([
-      { path: 'admin', component: AdminComponent/*, canActivate:[AuthGuard]*/},
+      { path: 'admin', component: AdminComponent, canActivate:[AuthGuard]},
     ]),
   ],
   providers: [

@@ -8,7 +8,6 @@ import { environment } from '../../../environments/environment';
 import jwt_decode from 'jwt-decode';
 import { JwtHelperService } from "@auth0/angular-jwt";
 
-
 @Injectable()
 export class AuthService {
   readonly TOKEN_NAME = 'access_token';
@@ -24,27 +23,24 @@ export class AuthService {
   }
 
 
-  login(username: string, password: string) {
-    return this.httpClient.post<{ access_token: string, username: string }>
+  login(login: string, password: string) {
+    return this.httpClient.post<{ access_token: string, login: string }>
     (
       [environment.API_URL, 'auth', 'login'].join('/'),
-      { username, password }
+      { login, password }
     ).pipe(tap(res => {
-      // запись данных в LocalStorage
       localStorage.setItem(this.TOKEN_NAME, res.access_token);
-      localStorage.setItem('username', res.username);
-      // уведомление об авторизации пользователя
+      localStorage.setItem('login', res.login);
+    
       this.isUserAuth$.next(true);
     }));
   }
 
   logout() {
-    // TODO: Server logout
     return of([]).pipe(tap(() => {
-      // очистка данных в LocalStorage
       localStorage.removeItem(this.TOKEN_NAME);
-      localStorage.removeItem('username');
-      // уведомление об выходе пользователя
+      localStorage.removeItem('login');
+      
       this.isUserAuth$.next(false);
       this.router.navigate(['/login']);
     }))

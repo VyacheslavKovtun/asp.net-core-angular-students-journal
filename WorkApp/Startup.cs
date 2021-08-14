@@ -30,15 +30,6 @@ namespace WorkApp
         {
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
-            services.AddDbContext<DatabaseContext>(options => { 
-                string connectionString = Configuration.GetConnectionString("DefaultConnection");
-                options.UseSqlServer(connectionString);
-            });
-
-            services.AddIdentity<IUnitOfWork, UnitOfWork>();
-            services.AddIdentity<ISubjectsService, SubjectsService>();
-            services.AddIdentity<IMarksService, MarksService>();
-            services.AddIdentity<IUsersService, UsersService>();
 
             services.AddSpaStaticFiles(configuration =>
             {
@@ -61,6 +52,16 @@ namespace WorkApp
                         ValidateIssuerSigningKey = true,
                     };
                 });
+
+            services.AddDbContext<DatabaseContext>(options => {
+                string connectionString = Configuration.GetConnectionString("DefaultConnection");
+                options.UseSqlServer(connectionString);
+            });
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<ISubjectsService, SubjectsService>();
+            services.AddTransient<IMarksService, MarksService>();
+            services.AddTransient<IUsersService, UsersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
