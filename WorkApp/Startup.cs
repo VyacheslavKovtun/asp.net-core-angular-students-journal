@@ -29,7 +29,6 @@ namespace WorkApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            // In production, the Angular files will be served from this directory
 
             services.AddSpaStaticFiles(configuration =>
             {
@@ -58,10 +57,14 @@ namespace WorkApp
                 options.UseSqlServer(connectionString);
             });
 
+            services.AddControllers();
+
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<ISubjectsService, SubjectsService>();
             services.AddTransient<IMarksService, MarksService>();
             services.AddTransient<IUsersService, UsersService>();
+
+            services.AddTransient<UsersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

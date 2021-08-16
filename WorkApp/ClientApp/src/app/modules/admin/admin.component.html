@@ -9,10 +9,22 @@
     <td mat-cell *matCellDef="let element">{{element.id}}</td>
   </ng-container>
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>Name</th>
-    <td mat-cell *matCellDef="let element">{{element.name}}</td>
+  <!--First Name Column -->
+  <ng-container matColumnDef="firstName">
+    <th mat-header-cell *matHeaderCellDef>First Name</th>
+    <td mat-cell *matCellDef="let element">{{element.firstName}}</td>
+  </ng-container>
+
+   <!--Last Name Column -->
+   <ng-container matColumnDef="lastName">
+    <th mat-header-cell *matHeaderCellDef>Last Name</th>
+    <td mat-cell *matCellDef="let element">{{element.lastName}</td>
+  </ng-container>
+
+  <!--Group Column-->
+   <ng-container matColumnDef="group">
+    <th mat-header-cell *matHeaderCellDef>Group</th>
+    <td mat-cell *matCellDef="let element">{{element.group}}</td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -26,6 +38,6 @@
 
 <div>
   <p *ngIf="clickedRow">
-    Clicked on {{clickedRow.name}}
+    Clicked on {{clickedRow.lastName}} {{clickedRow.firstName}}
   </p>
 </div>

@@ -37,11 +37,14 @@ namespace WorkApp.Business.Services.Users
                 Course = user.Course
             };
 
-            foreach (var markDTO in user.Marks)
+            if (user.Marks != null)
             {
-                var mark = await unitOfWork.MarksRepository.GetAsync(markDTO.Id);
+                foreach (var markDTO in user.Marks)
+                {
+                    var mark = await unitOfWork.MarksRepository.GetAsync(markDTO.Id);
 
-                u.Marks.Add(mark);
+                    u.Marks.Add(mark);
+                }
             }
 
             await unitOfWork.UsersRepository.CreateAsync(u);

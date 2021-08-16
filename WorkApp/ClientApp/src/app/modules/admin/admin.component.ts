@@ -1,42 +1,53 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable, of} from 'rxjs';
-
-export interface Student {
-  id: number,
-  name: string,
-  marks: number[]
-}
+import { UsersApiService } from 'src/app/common/api/services/users.api.service';
+import { User } from 'src/app/common/interfaces/user.interface';
 
 @Component({
   selector: 'admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent implements OnInit{
+export class AdminComponent implements OnInit {
   title = 'app';
 
-  //TODO: insert after testing
-  // students$: Observable<Student[]> = of([]);
+  student: User;
+  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'group'];
+  students: User[] = [];
+  clickedRow: User;
 
-  displayedColumns: string[] = ['id', 'name'];
-  students: Student[] = [];
-  clickedRow: Student;
+  constructor(private usersApiService: UsersApiService) {
 
-  ngOnInit(): void {
-    this.students = [
-      {
-        id: 1,
-        name: 'Vasya',
-        marks: [10, 12, 9, 11]
-      },{
-        id: 2,
-        name: 'Masha',
-        marks: [12, 10, 11, 11]
-      },{
-        id: 3,
-        name: 'Petya',
-        marks: [5, 7, 9, 2]
-      },
-    ]
+  }
+
+  ngOnInit() {
+    this.loadUsers();
+  }
+
+  loadUsers() {
+    this.usersApiService.getUsers().subscribe((data: User[]) => {
+      this.students = data;
+    });
+  }
+
+  save() {
+    if (this.student.id == null) {
+        this.usersApiService.createUser(this.student).subscribe((data: User) => {
+          this.students.push(data)
+        });
+    } else {
+        this.usersApiService.updateUser(this.student).subscribe(data => {
+          this.loadUsers();
+        });
+    }
+  }
+
+  editUser(user: User) {
+    this.student = user;
+  }
+
+  delete(user: User) {
+      this.usersApiService.deleteUser(user.id).subscribe(data => {
+        this.loadUsers();
+      });
   }
 }

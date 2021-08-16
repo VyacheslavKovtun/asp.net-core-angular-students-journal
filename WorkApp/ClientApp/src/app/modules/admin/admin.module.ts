@@ -51,6 +51,7 @@ import {AuthGuard} from '../../shared/guards/auth.guard';
 import {AuthModule} from '../../shared/modules/auth.module';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthInterceptor} from '../../shared/interceptors/auth.interceptor';
+import { UsersApiService } from 'src/app/common/api/services/users.api.service';
 
 @NgModule({
   declarations: [
@@ -107,7 +108,7 @@ import {AuthInterceptor} from '../../shared/interceptors/auth.interceptor';
     MatFormFieldModule,
     AuthModule,
     RouterModule.forRoot([
-      { path: 'admin', component: AdminComponent, canActivate:[AuthGuard]},
+    { path: 'admin', component: AdminComponent/*, canActivate:[AuthGuard]*/},
     ]),
   ],
   providers: [
@@ -116,7 +117,8 @@ import {AuthInterceptor} from '../../shared/interceptors/auth.interceptor';
       useClass: AuthInterceptor,
       multi: true
     },
-    AuthGuard
+    AuthGuard,
+    UsersApiService,
   ]
 })
 export class AdminModule { }

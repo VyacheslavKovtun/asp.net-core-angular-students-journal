@@ -6,6 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using WorkApp.Business.DTO;
 using WorkApp.Business.Services.Users;
 using WorkApp.Database.Entities;
 using WorkApp.Models.Auth;
@@ -30,7 +31,7 @@ namespace WorkApp.Controllers
         {
             var identity = GetIdentity(viewModel.Login, viewModel.Password);
             if (identity is null)
-                return BadRequest(new { errorText = "Invalid username or password." });
+                return BadRequest(new { errorText = "Invalid login or password." });
 
             var now = DateTime.UtcNow;
 

@@ -34,6 +34,8 @@ export class LoginComponent implements OnInit {
   onBtnLogInFormClick() {
     if (this.logInForm.valid) {
       const { login, password } = this.logInForm.value;
+      console.log(login + '; ' + password);
+      
       this.authService.login(login, password).subscribe(() => {
         this.router.navigate(['/'])
       });
@@ -41,6 +43,6 @@ export class LoginComponent implements OnInit {
   }
 
   onBtnCheckInFormClick() {
-
+      
   }
 }

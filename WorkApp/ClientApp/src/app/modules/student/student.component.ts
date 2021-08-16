@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Student} from '../admin/admin.component';
+import { User } from 'src/app/common/interfaces/user.interface';
 
 @Component({
   selector: 'app-student',
@@ -7,15 +7,11 @@ import {Student} from '../admin/admin.component';
   styleUrls: ['./student.component.css']
 })
 export class StudentComponent implements OnInit {
-  student: Student;
+  student: User;
 
   constructor() { }
 
   ngOnInit() {
-    this.student = {
-      id: 1,
-      name: 'Vasya',
-      marks: [12, 10, 11, 11]
-    };
+    
   }
 }
