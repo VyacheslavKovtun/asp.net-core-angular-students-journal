@@ -34,7 +34,7 @@ namespace WorkApp.Controllers
             if (identity is null)
                 return BadRequest(new { errorText = "Invalid login or password." });
 
-            var role = GetRole(viewModel.Login, viewModel.Password);
+            var user = usersService.GetUserByLoginData(viewModel.Login, viewModel.Password).Result;
 
             var now = DateTime.UtcNow;
 
@@ -51,14 +51,9 @@ namespace WorkApp.Controllers
             {
                 access_token = encodedJwt,
                 login = identity.Name,
-                role = role
+                role = user.Role,
+                userId = user.Id
             });
-        }
-
-        private AuthRole GetRole(string login, string password)
-        {
-            var user = usersService.GetUserByLoginData(login, password).Result;
-            return user.Role;
         }
 
         private ClaimsIdentity GetIdentity(string login, string password)

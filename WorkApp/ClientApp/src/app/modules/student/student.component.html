@@ -1,18 +1,23 @@
 <h2 class="student-title">{{student.lastName}} {{student.firstName}}</h2>
 
 <div class="student-info">
+  <div class="student-info-title">First Name: </div>
   <p id="first-name">
     {{student.firstName}}
   </p>
+  <div class="student-info-title">Last Name: </div>
   <p id="last-name">
     {{student.lastName}}
   </p>
+  <div class="student-info-title">Age: </div>
   <p id="age">
     {{student.age}}
   </p>
+  <div class="student-info-title">Group: </div>
   <p id="group">
     {{student.group}}
   </p>
+  <div class="student-info-title">Course: </div>
   <p id="course">
     {{student.course}}
   </p>
@@ -27,8 +32,8 @@
     </mat-tab>
 
     <!--TODO: insert current after testing and replace smth-->
-    <!--<mat-label *ngFor="let subject of subjects$ | async" label="{{subject.name}}">
+    <!--<mat-tab *ngFor="let subject of subjects$ | async" label="{{subject.name}}">
       <div id="mark" *ngFor="let mark of marks">{{mark}}</div>
-    </mat-label>-->
+    </mat-tab>-->
   </mat-tab-group>
 </div>

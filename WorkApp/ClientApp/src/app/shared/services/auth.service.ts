@@ -21,24 +21,30 @@ export class AuthService {
   isUserAuth$ = new BehaviorSubject<boolean>(false);
   isAdminAuth$ = new BehaviorSubject<boolean>(false);
   isEditorAuth$ = new BehaviorSubject<boolean>(false);
+  userId: number;
 
   constructor(private httpClient: HttpClient, private router: Router, private jwtHelperService: JwtHelperService) {
     this.isUserAuth$.next(Boolean(localStorage.getItem(this.TOKEN_NAME)))
+    if(this.isUserAuth$) {
+      this.userId = Number.parseInt(localStorage.getItem('id'));
+    }
   }
 
   login(login: string, password: string) {
-    return this.httpClient.post<{ access_token: string, login: string, role: AuthRole }>
+    return this.httpClient.post<{ access_token: string, login: string, role: AuthRole, userId: number }>
     (
       [environment.API_URL, 'auth', 'login'].join('/'),
       { login, password }
     ).pipe(tap(res => {
       localStorage.setItem(this.TOKEN_NAME, res.access_token);
       localStorage.setItem('login', res.login);
+      localStorage.setItem('id', res.userId.toString());
       
       if(res.role == AuthRole.User) {
         this.isUserAuth$.next(true);
         this.isAdminAuth$.next(false);
         this.isEditorAuth$.next(false);
+        this.userId = res.userId;
       }
       if(res.role == AuthRole.Admin) {
         this.isAdminAuth$.next(true);
@@ -57,6 +63,7 @@ export class AuthService {
     return of([]).pipe(tap(() => {
       localStorage.removeItem(this.TOKEN_NAME);
       localStorage.removeItem('login');
+      localStorage.removeItem('id');
       
       this.isUserAuth$.next(false);
       this.isAdminAuth$.next(false);

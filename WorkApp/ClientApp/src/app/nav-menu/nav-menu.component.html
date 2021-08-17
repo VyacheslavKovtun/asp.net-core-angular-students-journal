@@ -32,7 +32,7 @@
             <a class="nav-link text-dark" [routerLink]="['/fetch-data']">Fetch data</a>
           </li>
           <li *ngIf="authService.isUserAuth$ | async" class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/student']">Student</a>
+            <a class="nav-link text-dark" [routerLink]="['/student', authService.userId]">Student</a>
           </li>
           <li *ngIf="authService.isAdminAuth$ | async" class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/admin']">Admin</a>

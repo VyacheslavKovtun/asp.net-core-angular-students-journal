@@ -170,9 +170,12 @@ namespace WorkApp.Business.Services.Users
                 Course = user.Course
             };
 
-            foreach(var mark in user.Marks)
+            if (user.Marks != null)
             {
-                userDTO.Marks.Add(await marksService.GetMarkById(mark.Id));
+                foreach (var mark in user.Marks)
+                {
+                    userDTO.Marks.Add(await marksService.GetMarkById(mark.Id));
+                }
             }
 
             return userDTO;
