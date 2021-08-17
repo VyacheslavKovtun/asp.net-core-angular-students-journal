@@ -35,7 +35,7 @@ namespace WorkApp.Controllers
             }
         }
 
-        /*[Authorize]*/
+        [Authorize]
         [HttpGet]
         public async Task<IEnumerable<UserDTO>> Get()
         {
