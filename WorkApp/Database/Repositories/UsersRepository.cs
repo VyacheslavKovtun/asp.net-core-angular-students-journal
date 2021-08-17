@@ -13,6 +13,12 @@ namespace WorkApp.Database.Repositories
     {
         public UsersRepository(DatabaseContext ctx): base(ctx) { }
 
+        public void Create(User value)
+        {
+            ctx.Entry(value).State = EntityState.Added;
+            ctx.SaveChanges();
+        }
+
         public async override Task<User> GetAsync(int id)
         {
             return await table.FirstOrDefaultAsync(u => u.Id == id);

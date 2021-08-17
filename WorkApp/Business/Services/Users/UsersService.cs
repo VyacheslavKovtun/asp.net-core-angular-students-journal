@@ -23,6 +23,33 @@ namespace WorkApp.Business.Services.Users
             this.marksService = new MarksService(unitOfWork);
         }
 
+        public void CreateUser(UserDTO user)
+        {
+            var u = new User
+            {
+                Login = user.Login,
+                Password = user.Password,
+                Role = user.Role,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Age = user.Age,
+                Group = user.Group,
+                Course = user.Course
+            };
+
+            if (user.Marks != null)
+            {
+                foreach (var markDTO in user.Marks)
+                {
+                    var mark = unitOfWork.MarksRepository.GetAsync(markDTO.Id).Result;
+
+                    u.Marks.Add(mark);
+                }
+            }
+
+            unitOfWork.UsersRepository.Create(u);
+        }
+
         public async Task CreateNewUser(UserDTO user)
         {
             var u = new User
@@ -75,11 +102,14 @@ namespace WorkApp.Business.Services.Users
                     Course = user.Course
                 };
 
-                foreach(var mark in user.Marks)
+                if (user.Marks != null)
                 {
-                    var markDTO = await marksService.GetMarkById(mark.Id);
+                    foreach (var mark in user.Marks)
+                    {
+                        var markDTO = await marksService.GetMarkById(mark.Id);
 
-                    userDTO.Marks.Add(markDTO);
+                        userDTO.Marks.Add(markDTO);
+                    }
                 }
 
                 usersDTO.Add(userDTO);
