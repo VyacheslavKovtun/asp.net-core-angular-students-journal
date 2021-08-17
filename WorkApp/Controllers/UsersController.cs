@@ -10,7 +10,7 @@ using WorkApp.Business.Services.Users;
 namespace WorkApp.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("users")]
     public class UsersController : ControllerBase
     {
         UsersService usersService;
@@ -38,12 +38,12 @@ namespace WorkApp.Controllers
             }
         }
 
-        [Authorize]
+        /*[Authorize]*/
         [HttpGet]
-        [Route("admin")]
         public async Task<IEnumerable<UserDTO>> Get()
         {
-            return await this.usersService.GetAllUsers();
+            var users = await this.usersService.GetAllUsers();
+            return users;
         }
 
         [Authorize]

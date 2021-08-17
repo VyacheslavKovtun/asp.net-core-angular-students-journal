@@ -26,6 +26,7 @@ export class AdminComponent implements OnInit {
   loadUsers() {
     this.usersApiService.getUsers().subscribe((data: User[]) => {
       this.students = data;
+      console.log(this.students);
     });
   }
 
