@@ -21,7 +21,7 @@ namespace WorkApp.Controllers
 
             if (this.usersService.GetAllUsers().Result.Count == 0)
             {
-                var user = new Business.DTO.UserDTO
+                this.usersService.CreateNewUser(new Business.DTO.UserDTO
                 {
                     Login = "pupkin01",
                     Password = "pupkin0110",
@@ -31,27 +31,7 @@ namespace WorkApp.Controllers
                     Age = 19,
                     Group = "APR19",
                     Course = 2
-                };
-
-                //user.Marks = new List<MarkDTO>();
-
-                this.usersService.CreateUser(user);
-
-
-                /*Task.Run(async () =>
-                {
-                    await this.usersService.CreateNewUser(new Business.DTO.UserDTO
-                    {
-                        Login = "pupkin01",
-                        Password = "pupkin0110",
-                        Role = Database.Entities.User.AuthRole.User,
-                        FirstName = "Vasya",
-                        LastName = "Pupkin",
-                        Age = 19,
-                        Group = "APR19",
-                        Course = 2
-                    });
-                });*/
+                });
             }
         }
 
@@ -75,7 +55,7 @@ namespace WorkApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                await this.usersService.CreateNewUser(userDTO);
+                await this.usersService.CreateNewUserAsync(userDTO);
 
                 return Ok(userDTO);
             }

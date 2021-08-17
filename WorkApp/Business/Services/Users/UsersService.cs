@@ -23,7 +23,7 @@ namespace WorkApp.Business.Services.Users
             this.marksService = new MarksService(unitOfWork);
         }
 
-        public void CreateUser(UserDTO user)
+        public void CreateNewUser(UserDTO user)
         {
             var u = new User
             {
@@ -50,7 +50,7 @@ namespace WorkApp.Business.Services.Users
             unitOfWork.UsersRepository.Create(u);
         }
 
-        public async Task CreateNewUser(UserDTO user)
+        public async Task CreateNewUserAsync(UserDTO user)
         {
             var u = new User
             {
