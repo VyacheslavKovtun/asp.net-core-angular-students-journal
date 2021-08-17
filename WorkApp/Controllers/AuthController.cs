@@ -53,14 +53,14 @@ namespace WorkApp.Controllers
 
         private ClaimsIdentity GetIdentity(string login, string password)
         {
-            var person = usersService.GetUserByLoginData(login, password).Result;
-            if (person is null)
+            var user = usersService.GetUserByLoginData(login, password).Result;
+            if (user is null)
                 return null;
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, person.Login),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, Enum.GetName(typeof(User.AuthRole), person.Role))
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, Enum.GetName(typeof(User.AuthRole), user.Role))
             };
 
             ClaimsIdentity claimsIdentity =

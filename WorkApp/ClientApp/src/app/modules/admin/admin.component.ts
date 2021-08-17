@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import { Observable } from 'rxjs';
 import { UsersApiService } from 'src/app/common/api/services/users.api.service';
 import { User } from 'src/app/common/interfaces/user.interface';
 
@@ -12,7 +13,7 @@ export class AdminComponent implements OnInit {
 
   student: User;
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'group'];
-  students: User[] = [];
+  students$: Observable<User[]>;
   clickedRow: User;
 
   constructor(private usersApiService: UsersApiService) {
@@ -24,16 +25,13 @@ export class AdminComponent implements OnInit {
   }
 
   loadUsers() {
-    this.usersApiService.getUsers().subscribe((data: User[]) => {
-      this.students = data;
-      console.log(this.students);
-    });
+    this.students$ = this.usersApiService.getUsers();
   }
 
   save() {
     if (this.student.id == null) {
-        this.usersApiService.createUser(this.student).subscribe((data: User) => {
-          this.students.push(data)
+        this.usersApiService.createUser(this.student).subscribe(data => {
+          this.loadUsers();
         });
     } else {
         this.usersApiService.updateUser(this.student).subscribe(data => {

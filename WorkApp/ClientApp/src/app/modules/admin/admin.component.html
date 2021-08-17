@@ -2,39 +2,45 @@
   <h2 class="admin-title">Students</h2>
 </header>
 
-<table mat-table [dataSource]="students" class="mat-elevation-z8 demo-table">
-  <!-- Id Column -->
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef>No.</th>
-    <td mat-cell *matCellDef="let element">{{element.id}}</td>
-  </ng-container>
+<ng-template #loading>
+  <p><em>Loading...</em></p>
+</ng-template>
 
-  <!-- First Name Column -->
-  <ng-container matColumnDef="firstName">
-    <th mat-header-cell *matHeaderCellDef>First Name</th>
-    <td mat-cell *matCellDef="let element">{{element.firstName}}</td>
-  </ng-container>
-
-  <!-- Last Name Column -->
-  <ng-container matColumnDef="lastName">
-    <th mat-header-cell *matHeaderCellDef>Last Name</th>
-    <td mat-cell *matCellDef="let element">{{element.lastName}}</td>
-  </ng-container>
-
-  <!-- Group Column -->
-  <ng-container matColumnDef="group">
-    <th mat-header-cell *matHeaderCellDef>Group</th>
-    <td mat-cell *matCellDef="let element">{{element.group}}</td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr
-    mat-row
-    (click)="clickedRow = row"
-    [class.demo-row-is-clicked]="clickedRow == row"
-    *matRowDef="let row; columns: displayedColumns;"
-  ></tr>
-</table>
+<ng-container *ngIf="students$ | async;else loading; let students;">
+  <table mat-table [dataSource]="students" class="mat-elevation-z8 demo-table">
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>No.</th>
+      <td mat-cell *matCellDef="let element">{{element.id}}</td>
+    </ng-container>
+  
+    <!-- First Name Column -->
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell *matHeaderCellDef>First Name</th>
+      <td mat-cell *matCellDef="let element">{{element.firstName}}</td>
+    </ng-container>
+  
+    <!-- Last Name Column -->
+    <ng-container matColumnDef="lastName">
+      <th mat-header-cell *matHeaderCellDef>Last Name</th>
+      <td mat-cell *matCellDef="let element">{{element.lastName}}</td>
+    </ng-container>
+  
+    <!-- Group Column -->
+    <ng-container matColumnDef="group">
+      <th mat-header-cell *matHeaderCellDef>Group</th>
+      <td mat-cell *matCellDef="let element">{{element.group}}</td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      (click)="clickedRow = row"
+      [class.demo-row-is-clicked]="clickedRow == row"
+      *matRowDef="let row; columns: displayedColumns;"
+    ></tr>
+  </table>
+</ng-container>
 
 <div>
   <p *ngIf="clickedRow">
