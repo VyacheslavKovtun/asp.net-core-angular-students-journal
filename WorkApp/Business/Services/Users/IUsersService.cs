@@ -10,7 +10,7 @@ namespace WorkApp.Business.Services.Users
     {
         Task CreateNewUserAsync(UserDTO user);
         void CreateNewUser(UserDTO user);
-        Task<List<UserDTO>> GetAllUsers();
+        Task<List<UserDTO>> GetStudents();
         Task<UserDTO> GetUserById(int id);
         Task UpdateUser(UserDTO user);
         Task DeleteUserById(int id);

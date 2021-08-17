@@ -82,12 +82,48 @@ namespace WorkApp.Business.Services.Users
             await unitOfWork.UsersRepository.DeleteAsync(id);
         }
 
-        public async Task<List<UserDTO>> GetAllUsers()
+        private async Task<List<UserDTO>> GetAllUsers()
         {
             var users = await unitOfWork.UsersRepository.GetAllAsync();
             List<UserDTO> usersDTO = new List<UserDTO>();
 
-            foreach(var user in users)
+            foreach (var user in users)
+            {
+                var userDTO = new UserDTO
+                {
+                    Id = user.Id,
+                    Login = user.Login,
+                    Password = user.Password,
+                    Role = user.Role,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Age = user.Age,
+                    Group = user.Group,
+                    Course = user.Course
+                };
+
+                if (user.Marks != null)
+                {
+                    foreach (var mark in user.Marks)
+                    {
+                        var markDTO = await marksService.GetMarkById(mark.Id);
+
+                        userDTO.Marks.Add(markDTO);
+                    }
+                }
+
+                usersDTO.Add(userDTO);
+            }
+
+            return usersDTO;
+        }
+
+        public async Task<List<UserDTO>> GetStudents()
+        {
+            var users = await unitOfWork.UsersRepository.GetAllAsync();
+            List<UserDTO> usersDTO = new List<UserDTO>();
+
+            foreach(var user in users.Where(u => u.Role == User.AuthRole.User))
             {
                 var userDTO = new UserDTO
                 {

@@ -18,28 +18,13 @@ namespace WorkApp.Controllers
         public UsersController(UsersService usersService)
         {
             this.usersService = usersService;
-
-            if (this.usersService.GetAllUsers().Result.Count == 0)
-            {
-                this.usersService.CreateNewUser(new Business.DTO.UserDTO
-                {
-                    Login = "pupkin01",
-                    Password = "pupkin0110",
-                    Role = Database.Entities.User.AuthRole.User,
-                    FirstName = "Vasya",
-                    LastName = "Pupkin",
-                    Age = 19,
-                    Group = "APR19",
-                    Course = 2
-                });
-            }
         }
 
         [Authorize]
         [HttpGet]
         public async Task<IEnumerable<UserDTO>> Get()
         {
-            var users = await this.usersService.GetAllUsers();
+            var users = await this.usersService.GetStudents();
             return users;
         }
 

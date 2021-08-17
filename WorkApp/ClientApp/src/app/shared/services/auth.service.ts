@@ -37,12 +37,18 @@ export class AuthService {
       
       if(res.role == AuthRole.User) {
         this.isUserAuth$.next(true);
+        this.isAdminAuth$.next(false);
+        this.isEditorAuth$.next(false);
       }
       if(res.role == AuthRole.Admin) {
         this.isAdminAuth$.next(true);
+        this.isUserAuth$.next(false);
+        this.isEditorAuth$.next(false);
       }
       if(res.role == AuthRole.Editor) {
         this.isEditorAuth$.next(true);
+        this.isAdminAuth$.next(false);
+        this.isUserAuth$.next(false);
       }
     }));
   }

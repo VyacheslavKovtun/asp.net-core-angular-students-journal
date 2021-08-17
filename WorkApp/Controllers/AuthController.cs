@@ -50,7 +50,7 @@ namespace WorkApp.Controllers
             return new JsonResult(new
             {
                 access_token = encodedJwt,
-                username = identity.Name,
+                login = identity.Name,
                 role = role
             });
         }
