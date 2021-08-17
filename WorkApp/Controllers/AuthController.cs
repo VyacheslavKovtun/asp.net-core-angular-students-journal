@@ -11,11 +11,12 @@ using WorkApp.Business.Services.Users;
 using WorkApp.Database.Entities;
 using WorkApp.Models.Auth;
 using WorkApp.Utils;
+using static WorkApp.Database.Entities.User;
 
 namespace WorkApp.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("auth")]
     public class AuthController : ControllerBase
     {
         UsersService usersService;
@@ -33,6 +34,8 @@ namespace WorkApp.Controllers
             if (identity is null)
                 return BadRequest(new { errorText = "Invalid login or password." });
 
+            var role = GetRole(viewModel.Login, viewModel.Password);
+
             var now = DateTime.UtcNow;
 
             var jwt = new JwtSecurityToken(
@@ -47,8 +50,15 @@ namespace WorkApp.Controllers
             return new JsonResult(new
             {
                 access_token = encodedJwt,
-                username = identity.Name
+                username = identity.Name,
+                role = role
             });
+        }
+
+        private AuthRole GetRole(string login, string password)
+        {
+            var user = usersService.GetUserByLoginData(login, password).Result;
+            return user.Role;
         }
 
         private ClaimsIdentity GetIdentity(string login, string password)

@@ -108,7 +108,7 @@ import { UsersApiService } from 'src/app/common/api/services/users.api.service';
     MatFormFieldModule,
     AuthModule,
     RouterModule.forRoot([
-    { path: 'admin', component: AdminComponent/*, canActivate:[AuthGuard]*/},
+    { path: 'admin', component: AdminComponent, canActivate:[AuthGuard]},
     ]),
   ],
   providers: [
