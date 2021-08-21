@@ -1,5 +1,11 @@
 import { Mark } from "./mark.interface";
 
+export enum AuthRole {
+    User,
+    Editor,
+    Admin
+}
+
 export interface User
 {
     id: number,

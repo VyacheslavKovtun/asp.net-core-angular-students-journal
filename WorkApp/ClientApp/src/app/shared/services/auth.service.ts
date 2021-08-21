@@ -7,12 +7,9 @@ import { Router } from "@angular/router";
 import { environment } from '../../../environments/environment';
 import jwt_decode from 'jwt-decode';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { UsersApiService } from "src/app/common/api/services/users.api.service";
+import { AuthRole, User } from "src/app/common/interfaces/user.interface";
 
-export enum AuthRole {
-  User,
-  Editor,
-  Admin
-}
 
 @Injectable()
 export class AuthService {
@@ -23,10 +20,16 @@ export class AuthService {
   isEditorAuth$ = new BehaviorSubject<boolean>(false);
   userId: number;
 
-  constructor(private httpClient: HttpClient, private router: Router, private jwtHelperService: JwtHelperService) {
-    this.isUserAuth$.next(Boolean(localStorage.getItem(this.TOKEN_NAME)))
-    if(this.isUserAuth$) {
-      this.userId = Number.parseInt(localStorage.getItem('id'));
+  constructor(private httpClient: HttpClient, private router: Router, private jwtHelperService: JwtHelperService, private usersApiService: UsersApiService) {
+    const role = localStorage.getItem('role');
+    if(role === AuthRole.Admin.toString()) {
+      this.isAdminAuth$.next(true);
+    }
+    else {
+      this.isUserAuth$.next(Boolean(localStorage.getItem(this.TOKEN_NAME)))
+      if(this.isUserAuth$) {
+        this.userId = Number.parseInt(localStorage.getItem('id'));
+      }
     }
   }
 
@@ -39,6 +42,7 @@ export class AuthService {
       localStorage.setItem(this.TOKEN_NAME, res.access_token);
       localStorage.setItem('login', res.login);
       localStorage.setItem('id', res.userId.toString());
+      localStorage.setItem('role', res.role.toString());
       
       if(res.role == AuthRole.User) {
         this.isUserAuth$.next(true);
@@ -64,6 +68,7 @@ export class AuthService {
       localStorage.removeItem(this.TOKEN_NAME);
       localStorage.removeItem('login');
       localStorage.removeItem('id');
+      localStorage.removeItem('role');
       
       this.isUserAuth$.next(false);
       this.isAdminAuth$.next(false);

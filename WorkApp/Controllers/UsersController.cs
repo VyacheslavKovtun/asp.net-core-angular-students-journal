@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WorkApp.Business.DTO;
+using WorkApp.Business.Services.Subjects;
 using WorkApp.Business.Services.Users;
 
 namespace WorkApp.Controllers
@@ -15,7 +16,7 @@ namespace WorkApp.Controllers
     {
         UsersService usersService;
 
-        public UsersController(UsersService usersService)
+        public UsersController(UsersService usersService, SubjectsService subjectsService)
         {
             this.usersService = usersService;
         }
@@ -33,6 +34,12 @@ namespace WorkApp.Controllers
         public async Task<UserDTO> Get(int id)
         {
             return await this.usersService.GetUserById(id);
+        }
+
+        [HttpGet("{login}&{password}")]
+        public async Task<UserDTO> Get(string login, string password)
+        {
+            return await this.usersService.GetUserByLoginData(login, password);
         }
 
         [HttpPost]
