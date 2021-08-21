@@ -65,6 +65,8 @@ namespace WorkApp
             services.AddTransient<IUsersService, UsersService>();
 
             services.AddTransient<UsersService>();
+            services.AddTransient<SubjectsService>();
+            services.AddTransient<MarksService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
