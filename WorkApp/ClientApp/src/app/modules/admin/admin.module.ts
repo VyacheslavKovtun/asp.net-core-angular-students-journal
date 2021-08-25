@@ -49,7 +49,7 @@ import {PortalModule} from "@angular/cdk/portal";
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import {AuthGuard} from '../../shared/guards/auth.guard';
 import {AuthModule} from '../../shared/modules/auth.module';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthInterceptor} from '../../shared/interceptors/auth.interceptor';
 import { UsersApiService } from 'src/app/common/api/services/users.api.service';
 
@@ -107,6 +107,7 @@ import { UsersApiService } from 'src/app/common/api/services/users.api.service';
     ReactiveFormsModule,
     MatFormFieldModule,
     AuthModule,
+    HttpClientModule,
     RouterModule.forRoot([
     { path: 'admin', component: AdminComponent, canActivate:[AuthGuard]},
     ]),

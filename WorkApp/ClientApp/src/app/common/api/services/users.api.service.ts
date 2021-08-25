@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
 import { User } from "../../interfaces/user.interface";
 
@@ -20,8 +20,17 @@ export class UsersApiService
         return this.http.get<User>(this.url + '/' + id);
     }
 
+    getUserByLoginData(login: string, password: string) {
+        return this.http.get<User>(this.url + '/' + login + '&' + password);
+    }
+
     createUser(user: User) {
-        return this.http.post(this.url, user);
+        var body = JSON.stringify(user);
+        var headerOptions = new HttpHeaders({'Content-Type':'application/json'});
+        
+        return this.http.post(this.url, body, {
+            headers: headerOptions
+        });
     }
 
     updateUser(user: User) {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,10 +44,11 @@ namespace WorkApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(UserDTO userDTO)
+        public async Task<IActionResult> Post(object jsonObject)
         {
             if (ModelState.IsValid)
             {
+                var userDTO = JsonConvert.DeserializeObject<UserDTO>(jsonObject.ToString());
                 await this.usersService.CreateNewUserAsync(userDTO);
 
                 return Ok(userDTO);

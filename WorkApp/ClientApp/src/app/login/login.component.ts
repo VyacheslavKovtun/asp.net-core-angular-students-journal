@@ -1,6 +1,9 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
+import { UsersApiService } from '../common/api/services/users.api.service';
+import { AuthRole, User } from '../common/interfaces/user.interface';
 import { AuthService } from '../shared/services/auth.service';
 
 @Component({
@@ -11,8 +14,9 @@ import { AuthService } from '../shared/services/auth.service';
 export class LoginComponent implements OnInit {
   logInForm !: FormGroup;
   registerForm !: FormGroup;
+  user: User = null;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private usersApiService: UsersApiService, private router: Router) { }
 
   ngOnInit() {
     this.logInForm = new FormGroup({
@@ -42,6 +46,35 @@ export class LoginComponent implements OnInit {
   }
 
   onBtnCheckInFormClick() {
-    
+    if (this.registerForm.valid) {
+      const { login, password, firstName, lastName, age, group, course } = this.registerForm.value;
+      
+      this.usersApiService.getUserByLoginData(login, password).subscribe(u => {
+        this.user = u;
+      });
+
+      if(this.user == null) {
+        this.user = {
+          id: 0,
+          login: login,
+          password: password,
+          role: AuthRole.User,
+          firstName: firstName,
+          lastName: lastName,
+          age: age,
+          group: group,
+          course: course,
+          marks: null
+        }
+
+        this.usersApiService.createUser(this.user).subscribe(data => {
+          console.log(data);
+        });
+
+        this.usersApiService.getUsers().subscribe(users => {
+          console.log(users);
+        });
+      }
+    }
   }
 }

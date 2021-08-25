@@ -11,6 +11,7 @@ export interface User
     id: number,
     login: string,
     password: string,
+    role: AuthRole,
     firstName: string,
     lastName: string,
     age: number,

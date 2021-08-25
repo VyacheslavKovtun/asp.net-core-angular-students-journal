@@ -20,7 +20,7 @@ export class AuthService {
   isEditorAuth$ = new BehaviorSubject<boolean>(false);
   userId: number;
 
-  constructor(private httpClient: HttpClient, private router: Router, private jwtHelperService: JwtHelperService, private usersApiService: UsersApiService) {
+  constructor(private httpClient: HttpClient, private router: Router, private jwtHelperService: JwtHelperService) {
     const role = localStorage.getItem('role');
     if(role === AuthRole.Admin.toString()) {
       this.isAdminAuth$.next(true);
