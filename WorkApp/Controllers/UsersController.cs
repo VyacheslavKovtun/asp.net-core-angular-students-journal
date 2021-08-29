@@ -58,10 +58,11 @@ namespace WorkApp.Controllers
 
         [Authorize]
         [HttpPut]
-        public async Task<IActionResult> Put(UserDTO userDTO)
+        public async Task<IActionResult> Put(object jsonObject)
         {
             if (ModelState.IsValid)
             {
+                var userDTO = JsonConvert.DeserializeObject<UserDTO>(jsonObject.ToString());
                 await this.usersService.UpdateUser(userDTO);
 
                 return Ok(userDTO);

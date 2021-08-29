@@ -68,11 +68,8 @@ export class LoginComponent implements OnInit {
         }
 
         this.usersApiService.createUser(this.user).subscribe(data => {
-          console.log(data);
-        });
-
-        this.usersApiService.getUsers().subscribe(users => {
-          console.log(users);
+          console.log('User was created: ' + data);
+          this.router.navigate(['/']);
         });
       }
     }
