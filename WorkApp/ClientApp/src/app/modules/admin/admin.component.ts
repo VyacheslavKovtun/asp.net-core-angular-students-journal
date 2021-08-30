@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { SubjectsApiService } from 'src/app/common/api/services/subjects.api.service';
 import { UsersApiService } from 'src/app/common/api/services/users.api.service';
+import { Subject } from 'src/app/common/interfaces/subject.interface';
 import { User } from 'src/app/common/interfaces/user.interface';
 
 @Component({
@@ -17,9 +19,10 @@ export class AdminComponent implements OnInit {
   student: User;
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'group'];
   students$: Observable<User[]>;
+  subjects$: Observable<Subject[]>;
   clickedRow: User;
 
-  constructor(private usersApiService: UsersApiService) {
+  constructor(private usersApiService: UsersApiService, private subjectsApiService: SubjectsApiService) {
 
   }
 

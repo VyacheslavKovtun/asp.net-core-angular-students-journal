@@ -48,5 +48,19 @@ namespace WorkApp.Business.Services.Subjects
                 Name = sub.Name
             };
         }
+
+        public async Task UpdateSubject(SubjectDTO subjectDTO)
+        {
+            var subject = await unitOfWork.SubjectsRepository.GetAsync(subjectDTO.Id);
+
+            subject.Name = subjectDTO.Name;
+
+            await unitOfWork.SubjectsRepository.UpdateAsync(subject);
+        }
+
+        public async Task DeleteSubjectById(int id)
+        {
+            await unitOfWork.SubjectsRepository.DeleteAsync(id);
+        }
     }
 }
