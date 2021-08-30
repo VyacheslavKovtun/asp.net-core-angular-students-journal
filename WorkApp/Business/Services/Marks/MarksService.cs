@@ -27,6 +27,7 @@ namespace WorkApp.Business.Services.Marks
             var m = new Mark
             {
                 SMark = mark.SMark,
+                DateTime = mark.DateTime,
                 Subject = subject
             };
 
@@ -43,7 +44,7 @@ namespace WorkApp.Business.Services.Marks
             var marks = await unitOfWork.MarksRepository.GetAllAsync();
             List<MarkDTO> marksDTO = new List<MarkDTO>();
 
-            foreach(var mark in marks)
+            foreach (var mark in marks)
             {
                 var subjectDTO = await subjectsService.GetSubjectById(mark.Subject.Id);
 
@@ -51,6 +52,7 @@ namespace WorkApp.Business.Services.Marks
                 {
                     Id = mark.Id,
                     SMark = mark.SMark,
+                    DateTime = mark.DateTime,
                     Subject = subjectDTO
                 };
                 marksDTO.Add(markDTO);
@@ -69,6 +71,7 @@ namespace WorkApp.Business.Services.Marks
             {
                 Id = mark.Id,
                 SMark = mark.SMark,
+                DateTime = mark.DateTime,
                 Subject = subjectDTO
             };
         }
@@ -85,6 +88,7 @@ namespace WorkApp.Business.Services.Marks
             {
                 Id = mark.Id,
                 SMark = mark.SMark,
+                DateTime = mark.DateTime,
                 Subject = subject
             };
 

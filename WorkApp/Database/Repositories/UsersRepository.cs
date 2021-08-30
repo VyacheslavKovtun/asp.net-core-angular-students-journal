@@ -36,6 +36,7 @@ namespace WorkApp.Database.Repositories
             user.Age = value.Age;
             user.Group = value.Group;
             user.Course = value.Course;
+            user.Marks = new List<Mark>();
 
             if (value.Marks.Count != 0)
             {

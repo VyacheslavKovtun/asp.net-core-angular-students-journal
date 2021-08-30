@@ -123,7 +123,7 @@ namespace WorkApp.Business.Services.Users
             var users = await unitOfWork.UsersRepository.GetAllAsync();
             List<UserDTO> usersDTO = new List<UserDTO>();
 
-            foreach(var user in users.Where(u => u.Role == User.AuthRole.User))
+            foreach (var user in users.Where(u => u.Role == User.AuthRole.User))
             {
                 var userDTO = new UserDTO
                 {
@@ -194,6 +194,7 @@ namespace WorkApp.Business.Services.Users
                     {
                         Id = markDTO.Id,
                         SMark = markDTO.SMark,
+                        DateTime = markDTO.DateTime,
                         Subject = subject
                     });
                 }

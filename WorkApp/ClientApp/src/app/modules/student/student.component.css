@@ -24,8 +24,7 @@
   vertical-align: top;
 }
 
-#mark {
-  /*mark style (circle with color depended on mark)*/
+.mark {
   display: inline-block;
   margin: 20px;
   width: 35px;

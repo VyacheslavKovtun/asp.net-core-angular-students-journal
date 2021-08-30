@@ -3,6 +3,7 @@ import { Subject } from "./subject.interface";
 export interface Mark
 {
     id: number,
-    mark: number,
+    sMark: number,
+    dateTime: number,
     subject: Subject
 }

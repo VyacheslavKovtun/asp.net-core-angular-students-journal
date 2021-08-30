@@ -17,7 +17,7 @@ namespace WorkApp.Controllers
     {
         UsersService usersService;
 
-        public UsersController(UsersService usersService, SubjectsService subjectsService)
+        public UsersController(UsersService usersService)
         {
             this.usersService = usersService;
         }

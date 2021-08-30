@@ -1,32 +1,29 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
 import { Mark } from "../../interfaces/mark.interface";
-import { User } from "../../interfaces/user.interface";
 
 @Injectable()
-export class UsersApiService
+export class MarksApiService
 {
     url: string;
 
     constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string){
         this.url = baseUrl;
-        this.url += 'users';
+        this.url += 'marks';
     }
 
-    getUsers() {
-        return this.http.get<User[]>(this.url);
+    getMark() {
+        return this.http.get<Mark[]>(this.url);
     }
 
-    getUserById(id: number) {
-        return this.http.get<User>(this.url + '/' + id);
+    getMarkById(id: number) {
+        return this.http.get<Mark>(this.url + '/' + id);
     }
 
-    getUserByLoginData(login: string, password: string) {
-        return this.http.get<User>(this.url + '/' + login + '&' + password);
-    }
+    //get mark by DateTime
 
-    createUser(user: User) {
-        var body = JSON.stringify(user);
+    createMark(mark: Mark) {
+        var body = JSON.stringify(mark);
         var headerOptions = new HttpHeaders({'Content-Type':'application/json'});
         
         return this.http.post(this.url, body, {
@@ -34,8 +31,8 @@ export class UsersApiService
         });
     }
 
-    updateUser(user: User) {
-        var body = JSON.stringify(user);
+    updateMark(mark: Mark) {
+        var body = JSON.stringify(mark);
         var headerOptions = new HttpHeaders({'Content-Type':'application/json'});
 
         return this.http.put(this.url, body, {
@@ -43,7 +40,7 @@ export class UsersApiService
         });
     }
 
-    deleteUser(id: number) {
+    deleteMark(id: number) {
         return this.http.delete(this.url + '/' + id);
     }
 }

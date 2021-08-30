@@ -9,6 +9,7 @@ namespace WorkApp.Database.Entities
     public class Mark: BaseEntity<int>
     {
         public int SMark { get; set; }
+        public long DateTime { get; set; }
         public Subject Subject { get; set; }
     }
 }

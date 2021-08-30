@@ -9,6 +9,7 @@ namespace WorkApp.Business.DTO
     {
         public int Id { get; set; }
         public int SMark { get; set; }
+        public long DateTime { get; set; }
         public SubjectDTO Subject { get; set; }
     }
 }

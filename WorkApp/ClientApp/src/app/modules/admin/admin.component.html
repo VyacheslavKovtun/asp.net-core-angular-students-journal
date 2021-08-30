@@ -123,18 +123,21 @@
 
     <div class="student-marks">
       <mat-tab-group>
-        <mat-tab label="Math">Math marks</mat-tab>
-        <mat-tab label="English">English marks</mat-tab>
-        <mat-tab label="All marks">
-          <div id="mark" *ngFor="let mark of student.marks">{{mark}}</div>
+        <mat-tab *ngFor="let subject of subjects" label="{{subject.name}}">
+          <div class="mark" *ngFor="let mark of marksOfSubject(subject.id)">{{mark.sMark}}</div>
+          <button mat-mini-fab color="primary" (click)="onBtnPutMarkClick()">+</button>
+
+          <mat-form-field *ngIf="newMarkSelection" appearance="fill">
+            <mat-label>Select mark</mat-label>
+            <mat-select (selectionChange)="putSelectedMark(subject)" [(value)]="selectedMark">
+              <mat-option *ngFor="let mark of pMarks" value={{mark}}>{{mark}}</mat-option>
+            </mat-select>
+          </mat-form-field>
         </mat-tab>
-    
-        <!--TODO: insert current after testing and replace smth-->
-        <!--<mat-tab *ngFor="let subject of subjects$ | async" label="{{subject.name}}">
-          <div id="mark" *ngFor="let mark of marks">{{mark}}</div>
-        </mat-tab>-->
+        <mat-tab label="All marks">
+          <div class="mark" *ngFor="let mark of clickedRow.marks">{{mark.sMark}}</div>
+        </mat-tab>
       </mat-tab-group>
     </div>
   </div>
-
 </div>
