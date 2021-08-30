@@ -40,7 +40,8 @@ export class LoginComponent implements OnInit {
       const { login, password } = this.logInForm.value;
       
       this.authService.login(login, password).subscribe(() => {
-        this.router.navigate(['/'])
+        this.router.navigate(['/']);
+        alert('You are welcome!');
       });
     }
   }
@@ -51,27 +52,32 @@ export class LoginComponent implements OnInit {
       
       this.usersApiService.getUserByLoginData(login, password).subscribe(u => {
         this.user = u;
-      });
 
-      if(this.user == null) {
-        this.user = {
-          id: 0,
-          login: login,
-          password: password,
-          role: AuthRole.User,
-          firstName: firstName,
-          lastName: lastName,
-          age: age,
-          group: group,
-          course: course,
-          marks: null
+        if(this.user == null) {
+          this.user = {
+            id: 0,
+            login: login,
+            password: password,
+            role: AuthRole.User,
+            firstName: firstName,
+            lastName: lastName,
+            age: age,
+            group: group,
+            course: course,
+            marks: null
+          }
+  
+          this.usersApiService.createUser(this.user).subscribe(data => {
+            console.log('User was created: ' + data);
+            this.router.navigate(['/']);
+          });
+  
+          alert('User was created');
         }
-
-        this.usersApiService.createUser(this.user).subscribe(data => {
-          console.log('User was created: ' + data);
-          this.router.navigate(['/']);
-        });
-      }
+        else {
+          alert('User already exists!');
+        }
+      });
     }
   }
 }
