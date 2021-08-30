@@ -60,6 +60,11 @@ export class AdminComponent implements OnInit {
     }
   }
 
+  onBtnDeleteClick() {
+    this.delete(this.clickedRow);
+    this.clickedRow = null;
+  }
+
   loadUsers() {
     this.students$ = this.usersApiService.getUsers();
   }

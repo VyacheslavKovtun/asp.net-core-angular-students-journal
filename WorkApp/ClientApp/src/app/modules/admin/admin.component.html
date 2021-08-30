@@ -111,7 +111,12 @@
         </div>
 
         <div class="container">
-          <button [disabled]="!updateForm.valid" mat-raised-button color="primary" (click)="onBtnUpdateFormClick()">Save</button>
+          <div class="container">
+            <button [disabled]="!updateForm.valid" mat-raised-button color="primary" (click)="onBtnUpdateFormClick()">Save</button>
+          </div>
+          <div class="container">
+            <button mat-raised-button color="primary" (click)="onBtnDeleteClick()">Delete</button>
+          </div>
         </div>
       </div>
 
