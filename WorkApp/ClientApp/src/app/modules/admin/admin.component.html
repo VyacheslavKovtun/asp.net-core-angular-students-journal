@@ -42,8 +42,83 @@
   </table>
 </ng-container>
 
-<div>
-  <p *ngIf="clickedRow">
-    {{clickedRow.lastName}} {{clickedRow.firstName}}
-  </p>
+<div *ngIf="clickedRow">
+  <h2 class="student-title">{{clickedRow.lastName}} {{clickedRow.firstName}}</h2>
+
+  <div class="student-info">
+    <form [formGroup]="updateForm">
+      <div>
+        <div class="container">
+          Login: {{clickedRow.login}} 
+          <mat-form-field appearance="fill">
+            <mat-label>Login</mat-label>
+            <input matInput formControlName="login" placeholder="Enter your login...">
+          </mat-form-field>
+        </div>
+      
+        <div class="container">
+          Password: {{clickedRow.password}}
+          <mat-form-field appearance="fill">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" placeholder="Enter your password...">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div>
+        <div class="container">
+          First name: {{clickedRow.firstName}}
+          <mat-form-field appearance="fill">
+            <mat-label>First name</mat-label>
+            <input matInput formControlName="firstName" placeholder="Enter your first name...">
+          </mat-form-field>
+        </div>
+      
+        <div class="container">
+          Last name: {{clickedRow.lastName}}
+          <mat-form-field appearance="fill">
+            <mat-label>Last name</mat-label>
+            <input matInput formControlName="lastName" placeholder="Enter your last name...">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div>
+        <div class="container">
+          Age: {{clickedRow.age}}
+          <mat-form-field appearance="fill">
+            <mat-label>Age</mat-label>
+            <input matInput formControlName="age" placeholder="Enter your age...">
+          </mat-form-field>
+        </div>
+
+        <div class="container">
+          Group: {{clickedRow.group}}
+          <mat-form-field appearance="fill">
+            <mat-label>Group</mat-label>
+            <input matInput formControlName="group" placeholder="Enter your group...">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div>
+        <div class="container">
+          Course: {{clickedRow.course}}
+          <mat-form-field appearance="fill">
+            <mat-label>Course</mat-label>
+            <input matInput formControlName="course" placeholder="Enter your course...">
+          </mat-form-field>
+        </div>
+
+        <div class="container">
+          <button [disabled]="!updateForm.valid" mat-raised-button color="primary" (click)="onBtnUpdateFormClick()">Save</button>
+        </div>
+      </div>
+
+      <div *ngFor="let mark of clickedRow.marks">
+        {{mark.subject}}- {{mark.mark}}
+      </div>
+    </form>
+  </div>
+
 </div>

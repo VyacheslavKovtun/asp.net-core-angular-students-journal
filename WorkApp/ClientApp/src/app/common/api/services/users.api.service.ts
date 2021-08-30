@@ -34,7 +34,12 @@ export class UsersApiService
     }
 
     updateUser(user: User) {
-        return this.http.put(this.url, user);
+        var body = JSON.stringify(user);
+        var headerOptions = new HttpHeaders({'Content-Type':'application/json'});
+
+        return this.http.put(this.url, body, {
+            headers: headerOptions
+        });
     }
 
     deleteUser(id: number) {

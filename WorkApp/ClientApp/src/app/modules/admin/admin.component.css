@@ -4,7 +4,7 @@
   text-align: center;
   color: rgba(0, 0, 0, 0.72);
   text-shadow: 3px 3px 3px #c0c0be;
-  margin-bottom: 10px;
+  margin-bottom: 2vh;
   background: rgba(191, 191, 191, 0.16);
 }
 
@@ -25,4 +25,24 @@
 
 .demo-row-is-clicked {
   font-weight: bold;
+}
+
+.student-title {
+  margin-top: 2vh;
+  height: 8vh;
+  width: 100%;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.72);
+  text-shadow: 3px 3px 3px #c0c0be;
+  margin-bottom: 50px;
+  background: rgba(191, 191, 191, 0.16);
+}
+
+mat-form-field {
+  margin-left: 5%;
+}
+
+.container {
+  display: inline-block;
+  width: 50%;
 }

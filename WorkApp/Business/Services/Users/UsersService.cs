@@ -184,16 +184,19 @@ namespace WorkApp.Business.Services.Users
         public async Task UpdateUser(UserDTO user)
         {
             List<Mark> marks = new List<Mark>();
-            foreach(var markDTO in user.Marks)
+            if (user.Marks != null)
             {
-                var subject = await unitOfWork.SubjectsRepository.GetAsync(markDTO.Subject.Id);
-
-                marks.Add(new Mark
+                foreach (var markDTO in user.Marks)
                 {
-                    Id = markDTO.Id,
-                    SMark = markDTO.SMark,
-                    Subject = subject
-                });
+                    var subject = await unitOfWork.SubjectsRepository.GetAsync(markDTO.Subject.Id);
+
+                    marks.Add(new Mark
+                    {
+                        Id = markDTO.Id,
+                        SMark = markDTO.SMark,
+                        Subject = subject
+                    });
+                }
             }
 
             var u = new User
