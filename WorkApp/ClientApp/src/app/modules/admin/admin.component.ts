@@ -110,6 +110,7 @@ export class AdminComponent implements OnInit {
         }
     
         this.editUser(this.clickedRow);
+        alert('Mark was saved');
       });
     });
   }
