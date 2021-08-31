@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using WorkApp.Business.DTO;
 using WorkApp.Business.Services.Marks;
-using WorkApp.Business.Services.Subjects;
 using WorkApp.Database.Entities;
 using WorkApp.Database.UnitOfWork;
 
@@ -13,13 +12,11 @@ namespace WorkApp.Business.Services.Users
     public class UsersService : IUsersService
     {
         IUnitOfWork unitOfWork;
-        SubjectsService subjectsService;
         MarksService marksService;
 
         public UsersService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
-            this.subjectsService = new SubjectsService(unitOfWork);
             this.marksService = new MarksService(unitOfWork);
         }
 
@@ -188,14 +185,12 @@ namespace WorkApp.Business.Services.Users
             {
                 foreach (var markDTO in user.Marks)
                 {
-                    var subject = await unitOfWork.SubjectsRepository.GetAsync(markDTO.Subject.Id);
-
                     marks.Add(new Mark
                     {
                         Id = markDTO.Id,
                         SMark = markDTO.SMark,
                         DateTime = markDTO.DateTime,
-                        Subject = subject
+                        Subject = markDTO.Subject
                     });
                 }
             }

@@ -27,6 +27,6 @@ namespace WorkApp.Database.Entities
         public int Age { get; set; }
         public string Group { get; set; }
         public int Course { get; set; }
-        public ICollection<Mark> Marks { get; set; }
+        public List<Mark> Marks { get; set; }
     }
 }

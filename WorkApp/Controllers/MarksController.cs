@@ -37,13 +37,20 @@ namespace WorkApp.Controllers
         }
 
         [Authorize]
+        [HttpGet("dateTime/{dateTime}")]
+        public async Task<MarkDTO> Get(long dateTime)
+        {
+            return await this.marksService.GetMarkByDateTime(dateTime);
+        }
+
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Post(object jsonObject)
         {
             if (ModelState.IsValid)
             {
                 var markDTO = JsonConvert.DeserializeObject<MarkDTO>(jsonObject.ToString());
-                await this.marksService.CreateNewMark(markDTO);
+                await this.marksService.CreateNewMarkAsync(markDTO);
 
                 return Ok(markDTO);
             }

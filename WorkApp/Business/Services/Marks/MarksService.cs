@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WorkApp.Business.DTO;
-using WorkApp.Business.Services.Subjects;
 using WorkApp.Database.Entities;
 using WorkApp.Database.UnitOfWork;
 
@@ -12,23 +11,19 @@ namespace WorkApp.Business.Services.Marks
     public class MarksService : IMarksService
     {
         IUnitOfWork unitOfWork;
-        SubjectsService subjectsService;
 
         public MarksService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
-            this.subjectsService = new SubjectsService(unitOfWork);
         }
 
-        public async Task CreateNewMark(MarkDTO mark)
+        public async Task CreateNewMarkAsync(MarkDTO mark)
         {
-            var subject = await unitOfWork.SubjectsRepository.GetAsync(mark.Subject.Id);
-
             var m = new Mark
             {
                 SMark = mark.SMark,
                 DateTime = mark.DateTime,
-                Subject = subject
+                Subject = mark.Subject
             };
 
             await unitOfWork.MarksRepository.CreateAsync(m);
@@ -46,15 +41,14 @@ namespace WorkApp.Business.Services.Marks
 
             foreach (var mark in marks)
             {
-                var subjectDTO = await subjectsService.GetSubjectById(mark.Subject.Id);
-
                 var markDTO = new MarkDTO
                 {
                     Id = mark.Id,
                     SMark = mark.SMark,
                     DateTime = mark.DateTime,
-                    Subject = subjectDTO
+                    Subject = mark.Subject
                 };
+
                 marksDTO.Add(markDTO);
             }
 
@@ -65,31 +59,41 @@ namespace WorkApp.Business.Services.Marks
         {
             var mark = await unitOfWork.MarksRepository.GetAsync(id);
 
-            var subjectDTO = await subjectsService.GetSubjectById(mark.Subject.Id);
-
-            return new MarkDTO
+            MarkDTO markDTO = new MarkDTO
             {
                 Id = mark.Id,
                 SMark = mark.SMark,
                 DateTime = mark.DateTime,
-                Subject = subjectDTO
+                Subject = mark.Subject
             };
+
+            return markDTO;
+        }
+
+        public async Task<MarkDTO> GetMarkByDateTime(long dateTime)
+        {
+            var marks = await unitOfWork.MarksRepository.GetAllAsync();
+            var mark = marks.FirstOrDefault(m => m.DateTime == dateTime);
+
+            MarkDTO markDTO = new MarkDTO
+            {
+                Id = mark.Id,
+                SMark = mark.SMark,
+                DateTime = mark.DateTime,
+                Subject = mark.Subject
+            };
+
+            return markDTO;
         }
 
         public async Task UpdateMark(MarkDTO mark)
         {
-            var subject = new Subject
-            {
-                Id = mark.Subject.Id,
-                Name = mark.Subject.Name
-            };
-
             var m = new Mark
             {
                 Id = mark.Id,
                 SMark = mark.SMark,
                 DateTime = mark.DateTime,
-                Subject = subject
+                Subject = mark.Subject
             };
 
             await unitOfWork.MarksRepository.UpdateAsync(m);

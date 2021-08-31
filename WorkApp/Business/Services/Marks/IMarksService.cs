@@ -8,7 +8,7 @@ namespace WorkApp.Business.Services.Marks
 {
     public interface IMarksService
     {
-        Task CreateNewMark(MarkDTO mark);
+        Task CreateNewMarkAsync(MarkDTO mark);
         Task<List<MarkDTO>> GetAllMarks();
         Task<MarkDTO> GetMarkById(int id);
         Task UpdateMark(MarkDTO mark);

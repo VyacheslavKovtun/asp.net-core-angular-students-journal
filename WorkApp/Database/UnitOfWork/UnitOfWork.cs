@@ -11,12 +11,8 @@ namespace WorkApp.Database.UnitOfWork
     {
         DatabaseContext ctx;
 
-        SubjectsRepository _subjectsRepository;
         MarksRepository _marksRepository;
         UsersRepository _usersRepository;
-
-        public SubjectsRepository SubjectsRepository => _subjectsRepository
-            ?? (_subjectsRepository = new SubjectsRepository(ctx));
 
         public MarksRepository MarksRepository => _marksRepository
             ?? (_marksRepository = new MarksRepository(ctx));

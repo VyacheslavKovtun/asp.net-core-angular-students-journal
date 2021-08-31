@@ -8,7 +8,6 @@ namespace WorkApp.Database.UnitOfWork
 {
     public interface IUnitOfWork: IDisposable
     {
-        SubjectsRepository SubjectsRepository { get; }
         MarksRepository MarksRepository { get; }
         UsersRepository UsersRepository { get; }
     }

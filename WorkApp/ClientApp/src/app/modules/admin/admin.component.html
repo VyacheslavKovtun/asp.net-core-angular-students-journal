@@ -123,8 +123,8 @@
 
     <div class="student-marks">
       <mat-tab-group>
-        <mat-tab *ngFor="let subject of subjects" label="{{subject.name}}">
-          <div class="mark" *ngFor="let mark of marksOfSubject(subject.id)">{{mark.sMark}}</div>
+        <mat-tab *ngFor="let subject of subjects" label="{{subject}}">
+          <div class="mark" *ngFor="let mark of marksOfSubject(subject)">{{mark.sMark}}</div>
           <button mat-mini-fab color="primary" (click)="onBtnPutMarkClick()">+</button>
 
           <mat-form-field *ngIf="newMarkSelection" appearance="fill">

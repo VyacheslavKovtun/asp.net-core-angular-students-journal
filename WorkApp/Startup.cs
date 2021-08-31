@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using WorkApp.Business.Services.Marks;
-using WorkApp.Business.Services.Subjects;
 using WorkApp.Business.Services.Users;
 using WorkApp.Database.Common;
 using WorkApp.Database.UnitOfWork;
@@ -60,13 +59,11 @@ namespace WorkApp
             services.AddControllers();
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<ISubjectsService, SubjectsService>();
             services.AddTransient<IMarksService, MarksService>();
             services.AddTransient<IUsersService, UsersService>();
 
-            services.AddTransient<UsersService>();
-            services.AddTransient<SubjectsService>();
             services.AddTransient<MarksService>();
+            services.AddTransient<UsersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

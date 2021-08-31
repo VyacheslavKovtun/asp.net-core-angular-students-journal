@@ -9,7 +9,6 @@ namespace WorkApp.Database.Common
 {
     public class DatabaseContext: DbContext
     {
-        public DbSet<Subject> Subjects { get; set; }
         public DbSet<Mark> Marks { get; set; }
         public DbSet<User> Users { get; set; }
 

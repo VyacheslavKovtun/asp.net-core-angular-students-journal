@@ -2,10 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { MarksApiService } from 'src/app/common/api/services/marks.api.service';
-import { SubjectsApiService } from 'src/app/common/api/services/subjects.api.service';
 import { UsersApiService } from 'src/app/common/api/services/users.api.service';
-import { Mark } from 'src/app/common/interfaces/mark.interface';
-import { Subject } from 'src/app/common/interfaces/subject.interface';
+import { Mark, Subject } from 'src/app/common/interfaces/mark.interface';
 import { User } from 'src/app/common/interfaces/user.interface';
 
 @Component({
@@ -21,15 +19,17 @@ export class AdminComponent implements OnInit {
   student: User;
   displayedColumns: string[] = ['id', 'firstName', 'lastName', 'group'];
   students$: Observable<User[]>;
-  subjects: Subject[];
+  subjects: string[];
   clickedRow: User;
 
   pMarks = [1,2,3,4,5,6,7,8,9,10,11,12];
   newMarkSelection = false;
   selectedMark: number;
+  markSubject: Subject;
   mark: Mark;
+  savedMark: Mark;
 
-  constructor(private usersApiService: UsersApiService, private subjectsApiService: SubjectsApiService, private marksApiService: MarksApiService) {
+  constructor(private usersApiService: UsersApiService, private marksApiService: MarksApiService) {
 
   }
 
@@ -84,35 +84,67 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  putSelectedMark(subject: Subject) {
+  putSelectedMark(subject: string) {
     this.newMarkSelection = false;
   
+    this.markSubject = this.getSubjectFromString(subject);
+
     this.mark = {
       id: 0,
       sMark: Number.parseInt(this.selectedMark.toString()),
       dateTime: new Date().getTime(),
-      subject: subject
+      subject: this.markSubject
     };
 
-    console.log(this.mark);
+    this.marksApiService.createMark(this.mark).subscribe(m => {
+      this.marksApiService.getMarkByDateTime(this.mark.dateTime).subscribe(mark => {
+        this.savedMark = mark;
 
-    // this.marksApiService.createMark(this.mark).subscribe(m => {
-    //   if(this.clickedRow.marks != null) {
-    //     this.clickedRow.marks.push(this.mark);
-    //   } else {
-    //     this.clickedRow.marks = [this.mark];
-    //   }
-  
-    //   this.editUser(this.clickedRow);
-    //   console.log(this.student);
-    //   this.save();
-    // });
+        if(this.clickedRow.marks != null) {
+          this.clickedRow.marks.push(this.savedMark);
+        } else {
+          this.clickedRow.marks = [this.savedMark];
+        }
+    
+        this.editUser(this.clickedRow);
+        console.log(this.student);
+        this.save();
+      });
+    });
   }
 
-  marksOfSubject(subjectId: number) {
+  getSubjectFromString(subjectString: string)
+  {
+    switch(subjectString)
+    {
+      case 'Math':
+        return Subject.Math;
+        break;
+      case 'English':
+        return Subject.English;
+        break;
+      case 'Chemistry':
+        return  Subject.Chemistry;
+        break;
+      case 'Physics':
+        return Subject.Physics;
+        break;
+      case 'PE':
+        return Subject.PE;
+        break;
+      case 'History':
+        return Subject.History;
+        break;
+      case 'Literature':
+        return Subject.Literature;
+        break;
+    }
+  }
+
+  marksOfSubject(subject: string) {
     var marks = this.clickedRow.marks;
     if(marks != null) {
-      return marks.find(m => m.subject.id == subjectId);
+      return marks.find(m => m.subject == this.getSubjectFromString(subject));
     }
   }
 
@@ -121,9 +153,8 @@ export class AdminComponent implements OnInit {
   }
 
   loadSubjects() {
-    this.subjectsApiService.getSubjects().subscribe(sub =>{
-      this.subjects = sub;
-    });
+    this.subjects = ['Math','English', 'Chemistry', 'Physics', 'PE', 'History', 'Literature'];
+    console.log(this.subjects);
   }
 
   save() {

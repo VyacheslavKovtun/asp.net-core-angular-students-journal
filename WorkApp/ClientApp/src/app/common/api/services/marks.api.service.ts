@@ -12,7 +12,7 @@ export class MarksApiService
         this.url += 'marks';
     }
 
-    getMark() {
+    getMarks() {
         return this.http.get<Mark[]>(this.url);
     }
 
@@ -20,7 +20,9 @@ export class MarksApiService
         return this.http.get<Mark>(this.url + '/' + id);
     }
 
-    //get mark by DateTime
+    getMarkByDateTime(dateTime: number) {
+        return this.http.get<Mark>(this.url + '/dateTime/' + dateTime);
+    }
 
     createMark(mark: Mark) {
         var body = JSON.stringify(mark);

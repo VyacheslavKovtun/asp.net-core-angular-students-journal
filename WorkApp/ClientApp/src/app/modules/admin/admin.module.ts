@@ -52,7 +52,6 @@ import {AuthModule} from '../../shared/modules/auth.module';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthInterceptor} from '../../shared/interceptors/auth.interceptor';
 import { UsersApiService } from 'src/app/common/api/services/users.api.service';
-import { SubjectsApiService } from 'src/app/common/api/services/subjects.api.service';
 import { MarksApiService } from 'src/app/common/api/services/marks.api.service';
 
 @NgModule({
@@ -122,7 +121,6 @@ import { MarksApiService } from 'src/app/common/api/services/marks.api.service';
     },
     AuthGuard,
     UsersApiService,
-    SubjectsApiService,
     MarksApiService
   ]
 })

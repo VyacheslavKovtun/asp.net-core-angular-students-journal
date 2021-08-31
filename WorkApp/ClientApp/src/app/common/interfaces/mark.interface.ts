@@ -1,4 +1,12 @@
-import { Subject } from "./subject.interface";
+export enum Subject {
+    Math,
+    English,
+    Chemistry,
+    Physics,
+    PE,
+    History,
+    Literature
+}
 
 export interface Mark
 {

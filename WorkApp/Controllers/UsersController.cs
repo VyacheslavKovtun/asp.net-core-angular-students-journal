@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WorkApp.Business.DTO;
-using WorkApp.Business.Services.Subjects;
 using WorkApp.Business.Services.Users;
 
 namespace WorkApp.Controllers

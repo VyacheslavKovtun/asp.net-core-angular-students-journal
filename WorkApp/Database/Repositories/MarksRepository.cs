@@ -13,6 +13,12 @@ namespace WorkApp.Database.Repositories
     {
         public MarksRepository(DatabaseContext ctx) : base(ctx) { }
 
+        public void Create(Mark value)
+        {
+            ctx.Entry(value).State = EntityState.Added;
+            ctx.SaveChanges();
+        }
+
         public async override Task<Mark> GetAsync(int id)
         {
             return await table.FirstOrDefaultAsync(s => s.Id == id);
@@ -23,14 +29,7 @@ namespace WorkApp.Database.Repositories
             var mark = await GetAsync(value.Id);
             mark.SMark = value.SMark;
             mark.DateTime = value.DateTime;
-
-            Subject subject = new Subject()
-            {
-                Id = value.Subject.Id,
-                Name = value.Subject.Name
-            };
-
-            mark.Subject = subject;
+            mark.Subject = value.Subject;
 
             ctx.Entry(mark).State = EntityState.Modified;
             await ctx.SaveChangesAsync();
