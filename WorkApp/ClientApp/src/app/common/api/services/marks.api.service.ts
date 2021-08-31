@@ -20,6 +20,10 @@ export class MarksApiService
         return this.http.get<Mark>(this.url + '/' + id);
     }
 
+    getMarksByUserId(userId: number) {
+        return this.http.get<Mark[]>(this.url + '/userId/' + userId);
+    }
+
     getMarkByDateTime(dateTime: number) {
         return this.http.get<Mark>(this.url + '/dateTime/' + dateTime);
     }

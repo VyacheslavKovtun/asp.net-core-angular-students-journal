@@ -36,6 +36,7 @@
     <tr
       mat-row
       (click)="clickedRow = row"
+      (click)="selectUserClick()"
       [class.demo-row-is-clicked]="clickedRow == row"
       *matRowDef="let row; columns: displayedColumns;"
     ></tr>
@@ -122,22 +123,51 @@
     </form>
 
     <div class="student-marks">
-      <mat-tab-group>
-        <mat-tab *ngFor="let subject of subjects" label="{{subject}}">
-          <div class="mark" *ngFor="let mark of marksOfSubject(subject)">{{mark.sMark}}</div>
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let subject of subjects" (opened)="marksOfSubject(subject)">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{subject}}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="mark" *ngFor="let mark of subjectMarks">{{mark.sMark}}</div>
           <button mat-mini-fab color="primary" (click)="onBtnPutMarkClick()">+</button>
-
+          
           <mat-form-field *ngIf="newMarkSelection" appearance="fill">
+              <mat-label>Select mark</mat-label>
+              <mat-select (selectionChange)="putSelectedMark(subject)" [(value)]="selectedMark">
+                <mat-option *ngFor="let mark of pMarks" value={{mark}}>{{mark}}</mat-option>
+              </mat-select>
+          </mat-form-field>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              All marks
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="mark" *ngFor="let mark of clickedRow.marks">{{mark.sMark}}</div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+
+      <!-- <div *ngFor="let subject of subjects" marksOfSubject(subject)>
+        {{subject}}
+
+        <div class="mark" *ngFor="let mark of subjectMarks">{{mark.sMark}}</div>
+        <button mat-mini-fab color="primary" (click)="onBtnPutMarkClick()">+</button>
+        
+        <mat-form-field *ngIf="newMarkSelection" appearance="fill">
             <mat-label>Select mark</mat-label>
             <mat-select (selectionChange)="putSelectedMark(subject)" [(value)]="selectedMark">
               <mat-option *ngFor="let mark of pMarks" value={{mark}}>{{mark}}</mat-option>
             </mat-select>
-          </mat-form-field>
-        </mat-tab>
-        <mat-tab label="All marks">
-          <div class="mark" *ngFor="let mark of clickedRow.marks">{{mark.sMark}}</div>
-        </mat-tab>
-      </mat-tab-group>
+        </mat-form-field>
+      
+      <div label="All marks">
+        <div class="mark" *ngFor="let mark of clickedRow.marks">{{mark.sMark}}</div>
+      </div> -->
     </div>
   </div>
 </div>

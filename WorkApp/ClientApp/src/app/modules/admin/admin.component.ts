@@ -26,6 +26,8 @@ export class AdminComponent implements OnInit {
   newMarkSelection = false;
   selectedMark: number;
   markSubject: Subject;
+  userMarks: Mark[];
+  subjectMarks: Mark[];
   mark: Mark;
   savedMark: Mark;
 
@@ -108,8 +110,6 @@ export class AdminComponent implements OnInit {
         }
     
         this.editUser(this.clickedRow);
-        console.log(this.student);
-        this.save();
       });
     });
   }
@@ -143,10 +143,24 @@ export class AdminComponent implements OnInit {
   }
 
   marksOfSubject(subject: string) {
-    var marks = this.clickedRow.marks;
-    if(marks != null) {
-      return marks.find(m => m.subject == this.getSubjectFromString(subject));
+    this.subjectMarks = [];
+
+    if(this.userMarks != null) {
+      this.userMarks.forEach(m => {
+        if(m.subject == this.getSubjectFromString(subject)) {
+          this.subjectMarks.push(m);
+        }
+      });
     }
+
+    return this.subjectMarks;
+  }
+
+  selectUserClick() {
+    this.marksApiService.getMarksByUserId(this.clickedRow.id).subscribe(m => {
+      this.userMarks = m;
+      this.clickedRow.marks = this.userMarks;
+    });
   }
 
   loadUsers() {
@@ -155,18 +169,15 @@ export class AdminComponent implements OnInit {
 
   loadSubjects() {
     this.subjects = ['Math','English', 'Chemistry', 'Physics', 'PE', 'History', 'Literature'];
-    console.log(this.subjects);
   }
 
   save() {
     if (this.student.id == null) {
         this.usersApiService.createUser(this.student).subscribe(data => {
-          console.log('create');
           this.loadUsers();
         });
     } else {
         this.usersApiService.updateUser(this.student).subscribe(data => {
-          console.log('update');
           this.loadUsers();
         });
     }

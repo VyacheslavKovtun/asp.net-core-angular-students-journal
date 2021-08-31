@@ -73,6 +73,30 @@ namespace WorkApp.Business.Services.Marks
             return markDTO;
         }
 
+        public async Task<List<MarkDTO>> GetMarksByUserId(int userId)
+        {
+            var marks = await unitOfWork.MarksRepository.GetAllAsync();
+            var userMarks = marks.Where(m => m.UserId == userId);
+
+            List<MarkDTO> marksDTO = new List<MarkDTO>();
+
+            foreach (var uMark in userMarks)
+            {
+                MarkDTO markDTO = new MarkDTO
+                {
+                    Id = uMark.Id,
+                    SMark = uMark.SMark,
+                    DateTime = uMark.DateTime,
+                    Subject = uMark.Subject,
+                    UserId = uMark.UserId
+                };
+
+                marksDTO.Add(markDTO);
+            }
+
+            return marksDTO;
+        }
+
         public async Task<MarkDTO> GetMarkByDateTime(long dateTime)
         {
             var marks = await unitOfWork.MarksRepository.GetAllAsync();

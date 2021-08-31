@@ -37,6 +37,13 @@ namespace WorkApp.Controllers
         }
 
         [Authorize]
+        [HttpGet("userId/{userId}")]
+        public async Task<IEnumerable<MarkDTO>> GetMarksByUserId(int userId)
+        {
+            return await this.marksService.GetMarksByUserId(userId);
+        }
+
+        [Authorize]
         [HttpGet("dateTime/{dateTime}")]
         public async Task<MarkDTO> Get(long dateTime)
         {
