@@ -130,7 +130,10 @@
               {{subject}}
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <div class="mark" *ngFor="let mark of subjectMarks">{{mark.sMark}}</div>
+          <div class="mark" *ngFor="let mark of subjectMarks">
+            {{mark.sMark}}
+            <button class="deleteMarkBtn" (click)="onBtnDelMarkClick(mark.id)">Del</button>
+          </div>
           <button mat-mini-fab color="primary" (click)="onBtnPutMarkClick()">+</button>
           
           <mat-form-field *ngIf="newMarkSelection" appearance="fill">
@@ -150,24 +153,6 @@
           <div class="mark" *ngFor="let mark of clickedRow.marks">{{mark.sMark}}</div>
         </mat-expansion-panel>
       </mat-accordion>
-
-
-      <!-- <div *ngFor="let subject of subjects" marksOfSubject(subject)>
-        {{subject}}
-
-        <div class="mark" *ngFor="let mark of subjectMarks">{{mark.sMark}}</div>
-        <button mat-mini-fab color="primary" (click)="onBtnPutMarkClick()">+</button>
-        
-        <mat-form-field *ngIf="newMarkSelection" appearance="fill">
-            <mat-label>Select mark</mat-label>
-            <mat-select (selectionChange)="putSelectedMark(subject)" [(value)]="selectedMark">
-              <mat-option *ngFor="let mark of pMarks" value={{mark}}>{{mark}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-      
-      <div label="All marks">
-        <div class="mark" *ngFor="let mark of clickedRow.marks">{{mark.sMark}}</div>
-      </div> -->
     </div>
   </div>
 </div>

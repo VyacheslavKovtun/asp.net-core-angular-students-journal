@@ -157,6 +157,14 @@ export class AdminComponent implements OnInit {
     return this.subjectMarks;
   }
 
+  onBtnDelMarkClick(markId: number) {
+    this.marksApiService.deleteMark(markId).subscribe(m => {
+      this.editUser(this.clickedRow);
+      this.selectUserClick();
+      alert('Mark was deleted');
+    });
+  }
+
   selectUserClick() {
     this.marksApiService.getMarksByUserId(this.clickedRow.id).subscribe(m => {
       this.userMarks = m;
@@ -189,8 +197,15 @@ export class AdminComponent implements OnInit {
   }
 
   delete(user: User) {
-    this.usersApiService.deleteUser(user.id).subscribe(data => {
-      this.loadUsers();
+    this.marksApiService.getMarksByUserId(user.id).subscribe(m => {
+      if(m != null) {
+        for(var mark of m) {
+          this.marksApiService.deleteMark(mark.id);
+        }
+      }
+      this.usersApiService.deleteUser(user.id).subscribe(data => {
+        this.loadUsers();
+      });
     });
   }
 }
