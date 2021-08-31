@@ -13,5 +13,6 @@ export interface Mark
     id: number,
     sMark: number,
     dateTime: number,
-    subject: Subject
+    subject: Subject,
+    userId: number
 }

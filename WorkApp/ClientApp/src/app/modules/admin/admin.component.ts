@@ -93,7 +93,8 @@ export class AdminComponent implements OnInit {
       id: 0,
       sMark: Number.parseInt(this.selectedMark.toString()),
       dateTime: new Date().getTime(),
-      subject: this.markSubject
+      subject: this.markSubject,
+      userId: this.clickedRow.id
     };
 
     this.marksApiService.createMark(this.mark).subscribe(m => {

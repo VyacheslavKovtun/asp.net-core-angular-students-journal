@@ -30,6 +30,7 @@ namespace WorkApp.Database.Repositories
             mark.SMark = value.SMark;
             mark.DateTime = value.DateTime;
             mark.Subject = value.Subject;
+            mark.UserId = value.UserId;
 
             ctx.Entry(mark).State = EntityState.Modified;
             await ctx.SaveChangesAsync();

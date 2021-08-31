@@ -22,5 +22,7 @@ namespace WorkApp.Database.Entities
         public int SMark { get; set; }
         public long DateTime { get; set; }
         public Subject Subject { get; set; }
+
+        public int UserId { get; set; }
     }
 }

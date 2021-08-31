@@ -190,7 +190,8 @@ namespace WorkApp.Business.Services.Users
                         Id = markDTO.Id,
                         SMark = markDTO.SMark,
                         DateTime = markDTO.DateTime,
-                        Subject = markDTO.Subject
+                        Subject = markDTO.Subject,
+                        UserId = markDTO.UserId
                     });
                 }
             }

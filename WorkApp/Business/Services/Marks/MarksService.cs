@@ -23,7 +23,8 @@ namespace WorkApp.Business.Services.Marks
             {
                 SMark = mark.SMark,
                 DateTime = mark.DateTime,
-                Subject = mark.Subject
+                Subject = mark.Subject,
+                UserId = mark.UserId
             };
 
             await unitOfWork.MarksRepository.CreateAsync(m);
@@ -46,7 +47,8 @@ namespace WorkApp.Business.Services.Marks
                     Id = mark.Id,
                     SMark = mark.SMark,
                     DateTime = mark.DateTime,
-                    Subject = mark.Subject
+                    Subject = mark.Subject,
+                    UserId = mark.UserId
                 };
 
                 marksDTO.Add(markDTO);
@@ -64,7 +66,8 @@ namespace WorkApp.Business.Services.Marks
                 Id = mark.Id,
                 SMark = mark.SMark,
                 DateTime = mark.DateTime,
-                Subject = mark.Subject
+                Subject = mark.Subject,
+                UserId = mark.UserId
             };
 
             return markDTO;
@@ -80,7 +83,8 @@ namespace WorkApp.Business.Services.Marks
                 Id = mark.Id,
                 SMark = mark.SMark,
                 DateTime = mark.DateTime,
-                Subject = mark.Subject
+                Subject = mark.Subject,
+                UserId = mark.UserId
             };
 
             return markDTO;
@@ -93,7 +97,8 @@ namespace WorkApp.Business.Services.Marks
                 Id = mark.Id,
                 SMark = mark.SMark,
                 DateTime = mark.DateTime,
-                Subject = mark.Subject
+                Subject = mark.Subject,
+                UserId = mark.UserId
             };
 
             await unitOfWork.MarksRepository.UpdateAsync(m);
